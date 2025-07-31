@@ -1,6 +1,9 @@
 # Lovablytics 
 
-A simple WIP sentiment analysis app built with Go and React.
+A simple WIP Spotify track-analytics and statistic app built with Go and React.
+
+TODO:
+Incorporate Venice API for AI chat model
 
 ## Getting Started
 
