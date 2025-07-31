@@ -2,7 +2,7 @@ package services
 
 import (
 	"encoding/json"
-	"errors"
+	"io"
 	"net/http"
 )
 
@@ -20,12 +20,13 @@ func GetSpotifyProfile(accessToken string) (map[string]interface{}, error) {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		return nil, errors.New("failed to get Spotify profile")
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
 	}
 
 	var profile map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&profile); err != nil {
+	if err := json.Unmarshal(body, &profile); err != nil {
 		return nil, err
 	}
 
