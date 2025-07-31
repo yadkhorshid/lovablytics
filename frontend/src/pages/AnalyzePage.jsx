@@ -1,61 +1,52 @@
-import React, { useState } from 'react';
-import './AnalyzePage.css'; 
+import React, { useEffect, useState } from 'react';
+import './AnalyzePage.css';
+import TrackCard from '../components/TrackCard';
 
 export default function AnalyzePage() {
-  const [text, setText] = useState('');
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [tracks, setTracks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const analyzeText = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch('http://127.0.0.1:8080/analyze', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text }),
-      });
-      if (!res.ok) throw new Error('Server returned an error');
-      const data = await res.json();
-      setResult(data);
-    } catch (err) {
-      setError(err.message || 'Something went wrong');
-      setResult(null);
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    const fetchTopTracks = async () => {
+      setLoading(true);
+      setError(null);
+      const token = localStorage.getItem('spotify_access_token');
+
+      try {
+        const res = await fetch('http://127.0.0.1:8080/spotify/top-tracks', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) throw new Error('Failed to fetch top tracks');
+        const data = await res.json();
+        setTracks(data);
+      } catch (err) {
+        setError(err.message || 'Something went wrong');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTopTracks();
+  }, []);
 
   return (
-    <div className="app-container">
-      <h1>Lovablytics</h1>
+    <div className="analyze-container">
+      <h1>Your Music Mood Analysis </h1>
 
-      <textarea
-        rows="5"
-        placeholder="Enter some text to analyze..."
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <button onClick={analyzeText} disabled={loading || !text.trim()}>
-        {loading ? 'Analyzing...' : 'Analyze'}
-      </button>
-
+      {loading && <p>Loading your top tracks...</p>}
       {error && <p className="error-text">{error}</p>}
-      {result && (
-        <div className="results-box">
-          <h3>Results:</h3>
-          <pre>{JSON.stringify(result, null, 2)}</pre>
+
+      {!loading && !error && (
+        <div className="track-list">
+          {tracks.map((track) => (
+            <TrackCard key={track.id} track={track} />
+          ))}
         </div>
       )}
-
-      <div style={{ marginTop: '2rem' }}>
-        <a
-          href={`https://accounts.spotify.com/authorize?client_id=71cf22f55c574e398337ad23ca422f05&response_type=code&redirect_uri=http://127.0.0.1:5173/auth/spotify/callback&scope=user-read-email`}
-        >
-          <button>Login with Spotify</button>
-        </a>
-      </div>
     </div>
   );
 }

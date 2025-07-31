@@ -16,7 +16,7 @@ export default function SpotifyCallback() {
 
         if (data.access_token) {
           localStorage.setItem('spotify_access_token', data.access_token);
-          navigate('/profile');
+          navigate('/analyze'); 
         } else {
           console.error('Token fetch failed', data);
         }
