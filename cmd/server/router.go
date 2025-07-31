@@ -23,6 +23,7 @@ func Start() {
 	router.POST("/analyze", handlers.Analyze)
 	router.GET("/auth/spotify/callback", handlers.SpotifyCallback)
 	router.GET("/spotify/profile", handlers.GetSpotifyProfile)
+	router.GET("/spotify/top-tracks", handlers.GetTopTracksWithMood)
 
 	router.Run(":8080")
 }
