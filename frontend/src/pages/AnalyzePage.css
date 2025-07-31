@@ -1,0 +1,39 @@
+.app-container {
+  max-width: 600px;
+  margin: 4rem auto;
+  font-family: sans-serif;
+}
+
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background: #ff66a3;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.results-box {
+  margin-top: 2rem;
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 6px;
+  white-space: pre-wrap;
+}
+
+.error-text {
+  color: red;
+}
