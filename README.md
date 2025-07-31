@@ -1,6 +1,6 @@
 # Lovablytics 
 
-A simple sentiment analysis app built with Go and React.
+A simple WIP sentiment analysis app built with Go and React.
 
 ## Getting Started
 
