@@ -70,14 +70,19 @@ func InferMood(genres []string) string {
 			return "relaxed"
 		case strings.Contains(g, "emo"), strings.Contains(g, "punk"):
 			return "emotional"
-		case strings.Contains(g, "hip hop"), strings.Contains(g, "trap"):
+		case strings.Contains(g, "hip hop"), strings.Contains(g, "trap"), strings.Contains(g, "rap"):
 			return "intense"
 		case strings.Contains(g, "acoustic"), strings.Contains(g, "folk"):
 			return "calm"
+		case strings.Contains(g, "rock"), strings.Contains(g, "alternative"), strings.Contains(g, "metal"):
+			return "energetic"
+		case strings.Contains(g, "jazz"), strings.Contains(g, "blues"):
+			return "smooth"
 		}
 	}
 	return "unknown"
 }
+
 func FetchTopTracksWithMood(authHeader string) ([]Track, error) {
 	client := &http.Client{}
 
