@@ -1,0 +1,22 @@
+.track-card {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: border-color 0.3s ease;
+}
+
+.track-card h3 {
+  margin: 0 0 0.2rem 0;
+}
+
+.track-card .genres {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.track-card .mood {
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
